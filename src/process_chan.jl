@@ -1,4 +1,4 @@
-# SpQ - QSpike Tools reinvented - electrophysiology extracellular multichannel batch and parallel preprocessor
+# SpQEphysTools - QSpike Tools reinvented - electrophysiology extracellular multichannel batch and parallel preprocessor
 #    Copyright (C) 2024 Michele GIUGLIANO <michele.giugliano@unimore.it> and contributors.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -99,7 +99,7 @@ TBW
     data = nothing;
     xf = nothing;
     tspk = nothing;
-    #SpQ.meminfo_julia()
+    #SpQEphysTools.meminfo_julia()
 
     close(file)     # Close the file
 end # preproc_chan

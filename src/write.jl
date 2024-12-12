@@ -1,4 +1,4 @@
-# SpQ - QSpike Tools reinvented - electrophysiology extracellular multichannel batch and parallel preprocessor
+# SpQEphysTools - QSpike Tools reinvented - electrophysiology extracellular multichannel batch and parallel preprocessor
 #    Copyright (C) 2024 Michele GIUGLIANO <michele.giugliano@unimore.it> and contributors.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@ end
 if s.detect
     all_spk = []
     tmq = true
-    for i in 1:SpQ.s.Nchans
+    for i in 1:SpQEhphysTools.s.Nchans
      if isfile(OUTPUT * "/SPK/spk_$i.txt")
          tmp = readdlm(OUTPUT * "/SPK/spk_$i.txt")
          tmp[:,2] = tmp[:,2] .* i

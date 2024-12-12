@@ -1,4 +1,4 @@
-# SpQ - QSpike Tools reinvented - electrophysiology extracellular multichannel batch and parallel preprocessor
+# SpQEphysTools - QSpike Tools reinvented - electrophysiology extracellular multichannel batch and parallel preprocessor
 #    Copyright (C) 2024 Michele GIUGLIANO <michele.giugliano@unimore.it> and contributors.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -67,12 +67,12 @@ function parse_toml_files(OUTPUT)::settings
    #----------------------------------------------
 
    # Convert fmin_d, fmax_d, fmin_s, fmax_s, dpre, dpost to Float32, before calling the functions
-   bpfilt   = SpQ.prepare_bandpass(Float32(fmin_d), Float32(fmax_d), Float32(srate));
-   bpfilt_s = SpQ.prepare_bandpass(Float32(fmin_s), Float32(fmax_s), Float32(srate));
-   lpfilt   = SpQ.prepare_lowpass(Float32(fmax), Float32(srate));
+   bpfilt   = SpQEphysTools.prepare_bandpass(Float32(fmin_d), Float32(fmax_d), Float32(srate));
+   bpfilt_s = SpQEphysTools.prepare_bandpass(Float32(fmin_s), Float32(fmax_s), Float32(srate));
+   lpfilt   = SpQEphysTools.prepare_lowpass(Float32(fmax), Float32(srate));
 
    #-- Settings struct ---------------------------
-  return SpQ.settings(OUTPUT, LFP, fmax, rate, detect, fmin_d, fmax_d, stdmin, stdmax, event, ref, shapes, fmin_s, fmax_s, dpre, dpost, factor, spline, Nchans, Nsamples, Tick, ADZero, ConversionFactor, Exponent, srate, c, d, lpfilt, bpfilt, bpfilt_s);
+  return SpQEphysTools.settings(OUTPUT, LFP, fmax, rate, detect, fmin_d, fmax_d, stdmin, stdmax, event, ref, shapes, fmin_s, fmax_s, dpre, dpost, factor, spline, Nchans, Nsamples, Tick, ADZero, ConversionFactor, Exponent, srate, c, d, lpfilt, bpfilt, bpfilt_s);
 
 end # function parse_toml_files ----------------
 
