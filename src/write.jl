@@ -58,7 +58,7 @@ end
 if s.detect
     all_spk = []
     tmq = true
-    for i in 1:SpQEhphysTools.s.Nchans
+    for i in 1:SpQEphysTools.s.Nchans
      if isfile(OUTPUT * "/SPK/spk_$i.txt")
          tmp = readdlm(OUTPUT * "/SPK/spk_$i.txt")
          tmp[:,2] = tmp[:,2] .* i
