@@ -1,4 +1,4 @@
-using SpiQ
+using SpQEphysTools
 using Test
 
 @testset "SpiQ.jl" begin
