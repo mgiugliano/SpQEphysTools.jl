@@ -3,8 +3,7 @@
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    the Free Software Foundation.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,6 +20,7 @@ using TOML
 using HDF5
 using DSP
 using Statistics
+using StatsBase
 using JLD2
 using DelimitedFiles
 using Parameters
@@ -39,5 +39,6 @@ include("filtering.jl")
 include("detect.jl")
 include("write.jl")
 include("process_chan.jl")
+include("postprocessing.jl")
 
 end # module

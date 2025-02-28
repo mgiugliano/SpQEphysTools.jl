@@ -3,8 +3,7 @@
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    the Free Software Foundation.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -44,6 +43,6 @@ function meminfo_julia()
   #@info "GC live:   %9.3f MiB\n" Base.gc_live_bytes()/2^20
   #@info "JIT:       %9.3f MiB\n" Base.jit_total_bytes()/2^20
   #@info "Max. RSS:  %9.3f MiB\n" Sys.maxrss()/2^20
-  println(Sys.maxrss()/2^30)
-  end
+  println(Sys.maxrss() / 2^30)
+end
 
