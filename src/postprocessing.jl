@@ -372,7 +372,7 @@ end # End of the function plot_raster
 
 
 
-"
+"""
 plot_frequencies(pathname::String, fraction::Float64)
 
 Plot the distribution of firing rates, for each fraction of the total recording time.

@@ -25,6 +25,7 @@ using JLD2
 using DelimitedFiles
 using Parameters
 using .Sys
+using Plots
 
 # -- type definition(s) --
 include("types.jl")
