@@ -1,10 +1,10 @@
 ```@meta
-CurrentModule = SpiQ
+CurrentModule = SpQEphysTools
 ```
 
 # SpiQ
 
-Documentation for [SpiQ](https://github.com/mgiugliano/SpiQ.jl).
+Documentation for [SpQEphysTools](https://github.com/mgiugliano/SpQEphysTools.jl).
 
 List of functions:
 - extract_peaks(xf::Array{Float32,1}, thr::Float32, dpre::Float32, dpost::Float32, ref::Float32, event::Int64, srate::Float32)
@@ -29,5 +29,5 @@ List of functions:
 ```
 
 ```@autodocs
-Modules = [SpiQ]
+Modules = [SpQEphysTools]
 ```

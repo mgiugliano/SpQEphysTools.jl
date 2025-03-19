@@ -4,7 +4,7 @@ using Documenter
 DocMeta.setdocmeta!(SpQEphysTools, :DocTestSetup, :(using SpQEphysTools); recursive=true)
 
 makedocs(;
-    modules=[SpQLib],
+    modules=[SpQEphysTools],
     authors="Michele GIUGLIANO",
     sitename="SpQEphysTools.jl",
     format=Documenter.HTML(;
