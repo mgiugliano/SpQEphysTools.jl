@@ -66,6 +66,6 @@ jobs:
         shell: julia --project=docs --color=yes {0}
         run: |
           using Documenter: DocMeta, doctest
-          using SpiQ
-          DocMeta.setdocmeta!(SpiQ, :DocTestSetup, :(using SpiQ); recursive=true)
-          doctest(SpiQ)
+          using SpQEphysTools
+          DocMeta.setdocmeta!(SpQEphysTools, :DocTestSetup, :(using SpQEphysTools); recursive=true)
+          doctest(SpQEphysTools)
