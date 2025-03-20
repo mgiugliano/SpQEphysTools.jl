@@ -1,6 +1,6 @@
 using SpQEphysTools
 using Test
 
-@testset "SpiQ.jl" begin
+@testset "SpQEphysTools.jl" begin
     # Write your tests here.
 end
