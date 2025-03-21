@@ -63,7 +63,11 @@ function extract_peaks(xf::Array{Float32,1}, thr::Float32, dpre::Float32, dpost:
         end
     end
 
-    return reduce(vcat, idx')           # return the list of events (index and polarity)
+    if isempty(idx)                    # if no events detected
+        return []                      # return empty list
+    else
+        return reduce(vcat, idx')      # return the list of events (index and polarity)
+    end
 end # extract_peaks ----------------------------
 
 
