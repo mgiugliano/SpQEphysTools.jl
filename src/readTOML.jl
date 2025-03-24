@@ -61,7 +61,7 @@ function parse_toml_files(OUTPUT)::settings
     ConversionFactor = infofile["chans"]["ConversionFactor"] # D/A conversion factor
     Exponent = infofile["chans"]["Exponent"]  # Exponent for the conversion factor
     #----------------------------------------------
-    srate = 1E6 / Tick                          # Sampling rate in Hz
+    srate = 1E6 / Tick                    # Sampling rate in Hz (Float32)
     c = ConversionFactor * 10.0^Exponent  # Conversion from AD to physical units (V)
     d = -ADZero * c                       # Conversion from AD to physical units (V)
     #----------------------------------------------

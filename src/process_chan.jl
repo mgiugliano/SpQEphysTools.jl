@@ -56,17 +56,23 @@ TBW
 
         #@info "Chan $(chan) - detecting spikes...";
         idx = extract_peaks(xf, thr, s.dpre, s.dpost, s.ref, s.event, s.srate)
+
+        if length(idx) == 0
+            @warn "Chan $(chan) - no spikes detected!"
+            return
+        end
+
         tspk = idx
         tspk[:, 1] = tspk[:, 1] / s.srate
 
         outname = joinpath(s.OUTPUT, "spk_$(chan).txt")
-        writedlm(outname, tspk)
+        writedlm(outname, tspk) # Save the spike times, in seconds, to a text file
         @info "MUA: Chan $(chan) done! $(length(idx)) events detected."
     end # Spike detection --------------------------------
 
 
 
-    if s.shapes
+    if s.shapes && (length(idx) > 0)
         if s.fmin_s != s.fmin_d || s.fmax_s != s.fmax_d
             @warn "Different filters for spike detection and shapes!"
             xf = allocate_Float32vector(size(data, 1))
