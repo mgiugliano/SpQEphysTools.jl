@@ -111,7 +111,7 @@ Alternatively, it uses a fixed threshold to detect the bursts, ignoring combined
 
 ### Arguments
 - `pathname::String` : path to the folder containing the spike times and the configuration files (the pre-processed *.dat folder)
-- `nActiveEl::Int` : number of active electrodes 
+- `nActiveEl::Int` : number of active electrodes
 
 ### Author(s)
 - Michele Giugliano - michele.giugliano@unimore.it
@@ -149,7 +149,7 @@ function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)::Int
     # The n of active electrodes must be at least 1/6th of the total
     if nActiveEl <= (Nchans / 6)
         @warn "Burst Analysis: not enough active electrodes."
-        return 0    # return 0 bursts detected.	
+        return 0    # return 0 bursts detected.
     end # if
 
     # Start analyzing the spike times, to detect synchronous bursting epochs.
@@ -162,19 +162,19 @@ function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)::Int
 
     spk = readdlm(filename)     # Load ALL spike times (i.e. spk.txt file)
 
-    if size(spk, 1) == 0          # If the file is empty,
+    if size(spk, 1) <= 1          # If the file is empty,
         @warn "Burst Analysis: no spikes found!"
         return 0                # return 0 bursts detected.
     end # if
 
     # Let's define the edges of the PSTH
-    @info "Burst Analysis: detecting..."
+    @info "Burst Analysis: detecting... (AAAAAAHAAAHHAHAHAHA)"
     edges = 0:bin:T
     result = fit(Histogram, spk[:, 1], edges) # Hist of spike times (PSTH), for all chans
 
     if th_mode == "fix" # Fixed threshold for burst detection
-        # Threshold for burst detection as specified by the user (in the config file) 
-        psth = result.weights                    # Histogram of spike times 
+        # Threshold for burst detection as specified by the user (in the config file)
+        psth = result.weights                    # Histogram of spike times
     else # th_mode == "dyn" or th_mode == "syn"
         # Synchronous activity index estimation -------------------------------------------
         nbin = length(edges) - 1
@@ -190,9 +190,9 @@ function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)::Int
                 if tmq == false                             # Check if it is the first chan
                     active = Int.(result.weights .> 0)      # Store result as a {0,1} array
                     tmq = true
-                else                        # If not first chan, accumulate results 
+                else                        # If not first chan, accumulate results
                     active = active .+ Int.(result.weights .> 0)
-                    # for each bin, how many chans with (any) activity at that time. 
+                    # for each bin, how many chans with (any) activity at that time.
                 end
             end
         end # End of the loop over the channels -------------------------------------------
@@ -204,14 +204,14 @@ function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)::Int
                 threshold = min_threshold
             end
             psth = psth .* active # Synchronous activity index estimation
-        else # th_mode == "syn" 
-            # Threshold for burst detection as specified by the user (in the config file) 
+        else # th_mode == "syn"
+            # Threshold for burst detection as specified by the user (in the config file)
             psth = active
         end
     end # End of the if th_mode == "fix"
 
     # Let's detect the bursts (on whatever method or threshold chosen)
-    idx = Vector{Vector{Float32}}()      # Index of events and their peak amplitude 
+    idx = Vector{Vector{Float32}}()      # Index of events and their peak amplitude
 
     y = findall(psth .> threshold)     # Find the bursts (whatever method or threshold chosen)
 
@@ -225,10 +225,10 @@ function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)::Int
             push!(idx, [index, amply])  # append index of max to events list (index)
             last = index               # update index of last event detected so far
         end # if
-    end # for 
+    end # for
 
     nbursts = length(idx)          # number of bursts detected
-    return nbursts    # return the number of bursts detected	
+    return nbursts    # return the number of bursts detected
 end # End of the function extract_bursts
 
 
@@ -262,7 +262,7 @@ function plot_raster(pathname::String, fraction::Float64=1.0, title::Bool=false)
         return -1
     end
 
-    spk = readdlm(filename)     # Load ALL spike times 
+    spk = readdlm(filename)     # Load ALL spike times
 
     if size(spk, 1) == 0          # If the file is empty,
         @warn "Raster plot: no spikes found!"
@@ -303,7 +303,7 @@ function plot_raster(pathname::String, fraction::Float64=1.0, title::Bool=false)
             box=:on, # Box around the plot
             legend=false, # No legend
             linealpha=0.0, # No line
-            bgcolor=:white, # White background	
+            bgcolor=:white, # White background
             size=(800, 600), # Size of the plot in pixels
             left_margin=5Plots.mm,  # Increase left margin
             right_margin=10Plots.mm, # Increase right margin
@@ -323,7 +323,7 @@ function plot_raster(pathname::String, fraction::Float64=1.0, title::Bool=false)
         bin = 0.1 # 10 ms bins
         edges = 0:bin:max
         result = fit(Histogram, spk[:, 1], edges) # Hist of spike times (PSTH), for all chans
-        psth = result.weights / (bin * Nel)       # Histogram of spike times 
+        psth = result.weights / (bin * Nel)       # Histogram of spike times
         q = plot(edges, psth,
             seriestype=:bar,
             grid=true,

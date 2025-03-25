@@ -58,7 +58,7 @@ function tideup_output(OUTPUT)
         all_spk = []
         tmq = true
         for i in 1:SpQEphysTools.s.Nchans
-            if isfile(OUTPUT * "/SPK/spk_$i.txt")
+            if isfile(OUTPUT * "/SPK/spk_$i.txt") && filesize(OUTPUT * "/SPK/spk_$i.txt") > 0
                 tmp = readdlm(OUTPUT * "/SPK/spk_$i.txt")
                 tmp[:, 2] = tmp[:, 2] .* i
                 if tmq

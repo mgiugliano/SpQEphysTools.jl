@@ -37,9 +37,10 @@ TBW
         lpfilt = s.lpfilt
         xf = lowpass_and_dec(DATA, lpfilt, s.rate, s.srate)
         outname = joinpath(s.OUTPUT, "lfp_$(chan).jld2")
-        open(outname, "w") do f
-            write(f, "lfp", xf)
-        end
+        jldsave(outname; lfp=xf) # Save the LFP to a .jld2 file
+        #open(outname, "w") do f
+        #    write(f, "lfp", xf)
+        #end
         @info "LFP: Chan $(chan) done!"
         xf = nothing # Let's free some memory
     end # LFP --------------------------------------------
@@ -88,14 +89,15 @@ TBW
         wpost = Int32(ceil(1e-3 * s.dpost * s.srate))   # Post window, in samples
 
         outname = joinpath(s.OUTPUT, "spk_shapes_c$(chan).jld2")
-        open(outname, "w") do f
+        #open(outname, "w") do f
             for i in eachindex(idx[:, 1])
                 if idx[i, 1] - wpre > 0 && idx[i] + wpost < length(xf)
                     wave = xf[idx[i, 1]-wpre:idx[i, 1]+wpost]
-                    write(f, "wav_$(i)", wave)
+                    jldsave(outname; wav_$(i)=wave) # Save the spike shapes to a .jld2 file
+                    #write(f, "wav_$(i)", wave)
                 end # if
             end # for
-        end # open
+        #end # open
         @info "WAV: Chan $(chan) done!"
     end # Shapes ----------------------------------------
 
