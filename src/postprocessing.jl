@@ -116,7 +116,7 @@ Alternatively, it uses a fixed threshold to detect the bursts, ignoring combined
 ### Author(s)
 - Michele Giugliano - michele.giugliano@unimore.it
 """
-function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)::Int
+function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)
 
     # Let's get some pars from the config and meta files.
     config = joinpath(pathname, "config.toml")
@@ -149,7 +149,7 @@ function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)::Int
     # The n of active electrodes must be at least 1/6th of the total
     if nActiveEl <= (Nchans / 6)
         @warn "Burst Analysis: not enough active electrodes."
-        return 0    # return 0 bursts detected.
+        return 0, []    # return 0 bursts detected.
     end # if
 
     # Start analyzing the spike times, to detect synchronous bursting epochs.
@@ -157,18 +157,18 @@ function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)::Int
 
     if !isfile(filename)
         @error "Burst analysis: spk.txt file not found."
-        return 0
+        return 0, []    # return 0 bursts detected.
     end
 
     spk = readdlm(filename)     # Load ALL spike times (i.e. spk.txt file)
 
     if size(spk, 1) <= 1          # If the file is empty,
         @warn "Burst Analysis: no spikes found!"
-        return 0                # return 0 bursts detected.
+        return 0, []    # return 0 bursts detected.
     end # if
 
     # Let's define the edges of the PSTH
-    @info "Burst Analysis: detecting... (AAAAAAHAAAHHAHAHAHA)"
+    @info "Burst Analysis: detecting..."
     edges = 0:bin:T
     result = fit(Histogram, spk[:, 1], edges) # Hist of spike times (PSTH), for all chans
 
@@ -215,6 +215,11 @@ function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)::Int
 
     y = findall(psth .> threshold)     # Find the bursts (whatever method or threshold chosen)
 
+    if isempty(y)                     # No bursts detectable with this threshold
+        @warn "Burst Analysis: no threshold crossing!"
+        return 0, []    # return 0 bursts detected.
+    end # if
+
     last = 0.0         # Initialize the last burst time
     for i in eachindex(y)               # over all threshold crossings
         if y[i] >= last + rref         # current event after last refractory/dead period
@@ -228,7 +233,8 @@ function extract_bursts(pathname::String, nActiveEl::Int, ref::Float64)::Int
     end # for
 
     nbursts = length(idx)          # number of bursts detected
-    return nbursts    # return the number of bursts detected
+    return nbursts, []             # return the number of bursts detected
+    # This has to be completed with the starting and stop times of the bursts
 end # End of the function extract_bursts
 
 
