@@ -89,15 +89,16 @@ TBW
         wpost = Int32(ceil(1e-3 * s.dpost * s.srate))   # Post window, in samples
 
         outname = joinpath(s.OUTPUT, "spk_shapes_c$(chan).jld2")
-        #open(outname, "w") do f
+        jldopen(outname, "a+") do f
             for i in eachindex(idx[:, 1])
                 if idx[i, 1] - wpre > 0 && idx[i] + wpost < length(xf)
                     wave = xf[idx[i, 1]-wpre:idx[i, 1]+wpost]
                     jldsave(outname; "wav_$(i)", wave) # Save the spike shapes to a .jld2 file
-                    #write(f, "wav_$(i)", wave)
+                    jldsave(out)
+                    write(f, "wav_$(i)", wave)
                 end # if
             end # for
-        #end # open
+        end # open
         @info "WAV: Chan $(chan) done!"
     end # Shapes ----------------------------------------
 
