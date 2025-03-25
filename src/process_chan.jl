@@ -94,8 +94,7 @@ TBW
                 if idx[i, 1] - wpre > 0 && idx[i] + wpost < length(xf)
                     wave = xf[idx[i, 1]-wpre:idx[i, 1]+wpost]
                     jldsave(outname; "wav_$(i)", wave) # Save the spike shapes to a .jld2 file
-                    jldsave(out)
-                    write(f, "wav_$(i)", wave)
+                    #write(f, "wav_$(i)", wave)
                 end # if
             end # for
         end # open
