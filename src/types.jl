@@ -18,6 +18,7 @@ const ZPG = DSP.Filters.ZeroPoleGain{:z,ComplexF32,ComplexF32,Float32}; # Type a
 @with_kw mutable struct settings
   OUTPUT::String = ""  # Output directory
   LFP::Bool = false  # Extract LFP
+  type::String = "" # Type of data (MCS or 3BRAIN)
   fmax::Float32 = 0.0 # Low-pass cutoff frequency for LFP
   rate::Float32 = 0.0 # Decimation rate for LFP
 
