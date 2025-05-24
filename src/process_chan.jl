@@ -36,7 +36,6 @@ TBW
         @info "Chan $(chan): $(REQ) MB to read."
         chanDATA = data[chan:4096:end] # Get the data for the channel
         realREQ = size(chanDATA, 1) * 32 / 8 / 1e6                                  # Required memory in MB
-        @info "Chan $(chan): $(realREQ) MB to read."
         DATA = Float32.(c .* chanDATA .+ d)                    # This is time consuming CHECK CHECK CHECK
     end
    
@@ -55,10 +54,8 @@ TBW
         # open(outname, "w") do f
         #     write(f, "lfp", xf)
         # end
+        
         outname = joinpath(s.OUTPUT, "lfp_$(chan).txt")
-        #open(outname, "w") do f
-        #    write(f, xf)
-        #end
         writedlm(outname, xf) # Adam: temporary solution. JLD2 files were coming out corrupted
       
 
@@ -88,6 +85,11 @@ TBW
 
         outname = joinpath(s.OUTPUT, "spk_$(chan).txt")
         writedlm(outname, tspk)
+
+        noise_outname = joinpath(s.OUTPUT, "noise.txt")
+        open(noise_outname, "a") do f
+            writedlm(f, [chan noise_std]) 
+        end
         @info "MUA: Chan $(chan) done! $(length(idx)) events detected."
     end # Spike detection --------------------------------
 
@@ -122,7 +124,7 @@ TBW
                     end_sample = ap_sample + wpost
                     wave = xf[start_sample:end_sample]
                     #write(f, "wav_$(i)", wave)
-                    writedlm(f, wave',",")
+                    writedlm(f, wave',",") # Adam: temporary solution. JLD2 files were coming out corrupted
                 end # if
             end # for
         end # open

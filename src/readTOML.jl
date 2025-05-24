@@ -69,17 +69,17 @@ function parse_toml_files(OUTPUT)::settings
         d = -ADZero * c                       # Conversion from AD to physical units (V)
         #----------------------------------------------
     elseif type == "3BRAIN"
-        #srate = parse(Float64, infofile["info"]["FrameRate"])          # Sampling rate in Hz
         srate = infofile["info"]["FrameRate"]          # Sampling rate in Hz
+       
+        # These could be excluded, 3BRAINS does not have these values
+        # but the function still wants to output them
+        #----------------------------------------------
         Tick = 0
-        #Tick = (1 / srate) * 1E6; # tick in us
         ADZero = 0
         ConversionFactor = 0 # D/A conversion factor
         Exponent = 0
-        # maxA = parse(Float64, infofile["info"]["MaxAnalogValue"])
-        # minA = parse(Float64, infofile["info"]["MinAnalogValue"])
-        # maxD = parse(Float64, infofile["info"]["MaxDigitalValue"])
-        # minD = parse(Float64, infofile["info"]["MinDigitalValue"])
+        #----------------------------------------------
+
         maxA = infofile["info"]["MaxAnalogValue"]
         minA = infofile["info"]["MinAnalogValue"]
         maxD = infofile["info"]["MaxDigitalValue"]

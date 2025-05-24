@@ -79,7 +79,6 @@ function tideup_output(OUTPUT)
         if isfile(noise_outname) && filesize(noise_outname) > 0
             noise = readdlm(noise_outname)
             # sort through the electrode numbers and re-write in order
-
             noise = sortslices(noise, dims=1)
             writedlm(noise_outname, noise)
         end
