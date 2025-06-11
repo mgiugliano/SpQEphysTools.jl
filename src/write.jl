@@ -73,4 +73,15 @@ function tideup_output(OUTPUT)
         writedlm(OUTPUT * "/spk.txt", all_spk)
     end
 
+    # Clean and organize the noise file
+    if s.detect
+        noise_outname = OUTPUT * "/noise.txt"
+        if isfile(noise_outname) && filesize(noise_outname) > 0
+            noise = readdlm(noise_outname)
+            # sort through the electrode numbers and re-write in order
+            noise = sortslices(noise, dims=1)
+            writedlm(noise_outname, noise)
+        end
+    end
+
 end
