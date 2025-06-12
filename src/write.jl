@@ -40,6 +40,18 @@ function tideup_output(OUTPUT)
         end
     end
 
+    # If s.detect is true, we tide up the OUTPUT folder by moving
+    # the NOISE files (noise_*.txt) to a subfolder /NOISE
+    if s.detect
+        mkpath(OUTPUT * "/NOISE")
+        #run(`mkdir -p $OUTPUT/SPK`)
+        for file in readdir(OUTPUT) # Loop over the files in the OUTPUT folder
+            if startswith(file, "noise_") && endswith(file, ".txt")
+                #run(`mv $OUTPUT/$file $OUTPUT/SPK/`)
+                mv(OUTPUT * "/" * file, OUTPUT * "/NOISE/" * file)
+            end
+        end
+    end
     # If s.shapes is true, we tide up the OUTPUT folder by moving
     # the WAV files (wav_*.jld2) to a subfolder /WAV
     if s.shapes
@@ -75,13 +87,23 @@ function tideup_output(OUTPUT)
 
     # Clean and organize the noise file
     if s.detect
-        noise_outname = OUTPUT * "/noise.txt"
-        if isfile(noise_outname) && filesize(noise_outname) > 0
-            noise = readdlm(noise_outname)
-            # sort through the electrode numbers and re-write in order
-            noise = sortslices(noise, dims=1)
-            writedlm(noise_outname, noise)
+        all_noise = []
+        tmq = true
+        for i in 1:SpQEphysTools.s.Nchans
+            if isfile(OUTPUT * "/NOISE/noise_$i.txt") && filesize(OUTPUT * "/NOISE/noise_$i.txt") > 0
+                tmp_val = readdlm(OUTPUT * "/NOISE/noise_$i.txt")
+                tmp = [i tmp_val]
+                if tmq
+                    all_noise = tmp
+                    tmq = false
+                else
+                    all_noise = vcat(all_noise, tmp)
+                end
+            end
         end
+        all_noise = sortslices(all_noise, dims=1)
+        writedlm(OUTPUT * "/noise.txt", all_noise)
+        rm(OUTPUT * "/NOISE", recursive=true) # Remove the temporary NOISE folder
     end
 
 end
