@@ -86,10 +86,9 @@ TBW
         outname = joinpath(s.OUTPUT, "spk_$(chan).txt")
         writedlm(outname, tspk)
 
-        noise_outname = joinpath(s.OUTPUT, "noise.txt")
-        open(noise_outname, "a") do f
-            writedlm(f, [chan noise_std]) 
-        end
+        noise_outname = joinpath(s.OUTPUT, "noise_$(chan).txt")
+        writedlm(noise_outname, noise_std) 
+        
         @info "MUA: Chan $(chan) done! $(length(idx)) events detected."
     end # Spike detection --------------------------------
 
