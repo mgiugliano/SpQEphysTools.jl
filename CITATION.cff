@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Giugliano
+    given-names: Michele
+    orcid: https://orcid.org/0000-0003-2626-594X
+title: "SpQEphysTools.jl"
+version: 1.1.6
+identifiers:
+  - type: doi
+    value: 
+date-released: 2025-06-12
